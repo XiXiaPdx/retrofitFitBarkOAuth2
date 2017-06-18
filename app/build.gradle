@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     buildTypes.each {
         it.buildConfigField 'String', 'UNSPLASH_ID', UnSplashId
+        it.buildConfigField 'String', 'FITBARK_ID', FitBarkId
+        it.buildConfigField 'String', 'FITBARK_SECRET', FitBarkSecret
+        it.buildConfigField 'String', 'FITBARK_REDIRECT', FitBarkRedirect
     }
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
