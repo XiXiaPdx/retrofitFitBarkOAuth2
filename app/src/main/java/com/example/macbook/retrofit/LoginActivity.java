@@ -55,8 +55,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.code() == 200) {
                     user = response.body();
-                    Log.d("user email is ", user.getUser().toString());
-//                    userNameView.setText(user.getUsername().toString());
+                    UserObject username = (UserObject) response.body().getUserObject();
+                    userNameView.setText(username.getUserName());
                 } else {
 
                 }

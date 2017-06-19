@@ -7,14 +7,16 @@ package com.example.macbook.retrofit;
 public class User {
 
 
-    private Object user;
+    private UserObject user;
 
     public User () {};
 
-    public Object getUser() {
+    public Object getUserObject() {
         return user;
     }
 
 }
+
+
 
 
