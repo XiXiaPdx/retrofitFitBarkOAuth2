@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -23,22 +26,27 @@ import static com.example.macbook.retrofit.Constants.UNSPLASH_ID;
 
 public class MainActivity extends AppCompatActivity {
 
+    public Button main;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        getPictures();
-        getAuthCode();
-
+//        getAuthCode();
+        main = (Button) findViewById(R.id.button);
+        main.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    public void getAuthCode(){
-        Intent intent = new Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(ServiceGenerator.FITBARK_BASE_URL + "/authorize?response_type=code&client_credentials&" + "client_id=" +FITBARK_CLIENT_ID + "&redirect_uri=" + FITBARK_REDIRECT));
-        startActivity(intent);
 
-    }
+
+
 
     public void getPictures (){
         SplashPictures client =  ServiceGenerator.createService(SplashPictures.class);
@@ -59,4 +67,6 @@ Log.d("Response",response.body().get(0).getImageId().toString());
         });
 
     }
+
+
 }
