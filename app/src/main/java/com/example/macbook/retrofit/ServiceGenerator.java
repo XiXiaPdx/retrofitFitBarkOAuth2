@@ -55,7 +55,7 @@ public class ServiceGenerator {
                     new AuthenticationInterceptor(authToken);
 
             if (!httpClient.interceptors().contains(interceptor)) {
-                httpClient.addInterceptor(interceptor);
+//                httpClient.addInterceptor(interceptor);
                 httpClient.addInterceptor(logging);
 
                 builder.client(httpClient.build());

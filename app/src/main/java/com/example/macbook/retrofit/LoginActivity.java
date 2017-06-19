@@ -1,5 +1,6 @@
 package com.example.macbook.retrofit;
 
+import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import static com.example.macbook.retrofit.Constants.FITBARK_CLIENT_ID;
 import static com.example.macbook.retrofit.Constants.FITBARK_REDIRECT;
+import static com.example.macbook.retrofit.Constants.FITBARK_SECRET;
 
 public class LoginActivity extends AppCompatActivity {
     public Button loginButton;
@@ -47,17 +55,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onResume();
         // the intent filter defined in AndroidManifest will handle the return from ACTION_VIEW intent
         Uri uri = getIntent().getData();
-        if (uri == null){
-            Log.d("On RESUME", "Gets Here");
-
-        }
         if (uri != null && uri.toString().startsWith(intentRedirect)  ) {
             // use the parameter your API exposes for the code (mostly it's "code")
             String code = uri.getQueryParameter("code");
-            Log.d("URI CODE", code);
             if (code != null) {
                 // get access token
-                // we'll do that in a minute
+                FitBarkAPI loginService = ServiceGenerator.createService(FitBarkAPI.class, FITBARK_CLIENT_ID, FITBARK_SECRET);
+                Call<AccessToken> call = loginService.getAccessToken(code, "authorization_code", FITBARK_CLIENT_ID, FITBARK_SECRET, intentRedirect);
+                call.enqueue(new Callback<AccessToken>() {
+                    @Override
+                    public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                        if(response.code() == 200){
+                            Log.d("response", response.body().getAccessToken().toString());
+//                            AccessToken accessToken = response.body();
+//                            Log.d("accessToken", accessToken.getAccessToken());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AccessToken> call, Throwable t) {
+
+                    }
+                });
+
+
             } else if (uri.getQueryParameter("error") != null) {
                 Log.d("ERROR URI", "ERROR ERROR ERROR");
             }

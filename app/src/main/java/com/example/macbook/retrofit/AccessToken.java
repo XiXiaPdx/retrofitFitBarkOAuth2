@@ -6,22 +6,22 @@ package com.example.macbook.retrofit;
 
 public class AccessToken {
 
-    private String accessToken;
-    private String tokenType;
+    private String access_token;
+    private String token_type;
 
     public String getAccessToken() {
-        return accessToken;
+        return access_token;
     }
 
     public String getTokenType() {
         // OAuth requires uppercase Authorization HTTP header value for token type
-        if (! Character.isUpperCase(tokenType.charAt(0))) {
-            tokenType =
+        if (! Character.isUpperCase(token_type.charAt(0))) {
+            token_type =
                     Character
-                            .toString(tokenType.charAt(0))
-                            .toUpperCase() + tokenType.substring(1);
+                            .toString(token_type.charAt(0))
+                            .toUpperCase() + token_type.substring(1);
         }
 
-        return tokenType;
+        return token_type;
     }
 }
