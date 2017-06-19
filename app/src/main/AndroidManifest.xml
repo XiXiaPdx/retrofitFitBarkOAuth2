@@ -23,8 +23,8 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data
-                android:host="app.fitbark.com"
-                android:scheme="https" />
+                android:host="app.open"
+                android:scheme="myapp" />
             </intent-filter>
         </activity>
     </application>

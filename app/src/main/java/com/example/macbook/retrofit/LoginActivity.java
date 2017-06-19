@@ -13,7 +13,7 @@ import static com.example.macbook.retrofit.Constants.FITBARK_REDIRECT;
 
 public class LoginActivity extends AppCompatActivity {
     public Button loginButton;
-    public static final String intentRedirect = "https://app.fitbark.com";
+    public static final String intentRedirect = "myapp://app.open";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +25,17 @@ public class LoginActivity extends AppCompatActivity {
                 getAuthCode();
             }
         });
+//        Log.d("CREATING", "CREATE CREATE");
+////        Uri uri = getIntent().getData();
+////        if (uri != null ){
+////            Log.d("URI NOT NULL IN CREATE", uri.toString());
+////        }
     }
 
     public void getAuthCode(){
         Intent intent = new Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse(ServiceGenerator.FITBARK_BASE_URL + "/authorize?response_type=code&client_credentials&" + "client_id=" +FITBARK_CLIENT_ID + "&redirect_uri=" + FITBARK_REDIRECT));
+                Uri.parse(ServiceGenerator.FITBARK_BASE_URL + "/authorize?response_type=code&client_credentials&" + "client_id=" +FITBARK_CLIENT_ID + "&redirect_uri=" + intentRedirect));
         startActivity(intent);
 
     }
@@ -49,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         if (uri != null && uri.toString().startsWith(intentRedirect)  ) {
             // use the parameter your API exposes for the code (mostly it's "code")
             String code = uri.getQueryParameter("code");
-            Log.d("URI CODE", uri.toString());
+            Log.d("URI CODE", code);
             if (code != null) {
                 // get access token
                 // we'll do that in a minute
