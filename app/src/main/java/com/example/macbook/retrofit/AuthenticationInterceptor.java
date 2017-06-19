@@ -1,5 +1,7 @@
 package com.example.macbook.retrofit;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -23,8 +25,7 @@ public class AuthenticationInterceptor implements Interceptor {
         Request original = chain.request();
 
         Request.Builder builder = original.newBuilder()
-                .header("Authorization", authToken);
-
+                .header("Authorization", "Bearer "+authToken);
         Request request = builder.build();
         return chain.proceed(request);
     }

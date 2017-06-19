@@ -1,6 +1,7 @@
 package com.example.macbook.retrofit;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
@@ -16,7 +17,7 @@ import static com.example.macbook.retrofit.Constants.API_BASE_URL;
  */
 
 public class ServiceGenerator {
-    public static final String FITBARK_BASE_URL  = "https://app.fitbark.com/oauth/";
+    public static final String FITBARK_BASE_URL  = "https://app.fitbark.com/";
 
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -29,6 +30,12 @@ public class ServiceGenerator {
             new Retrofit.Builder()
                     .baseUrl(FITBARK_BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create());
+
+    private static Retrofit.Builder getUserBuilder =
+            new Retrofit.Builder()
+                    .baseUrl(FITBARK_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create());
+
 
     private static Retrofit retrofit = builder.build();
 
@@ -51,13 +58,15 @@ public class ServiceGenerator {
     public static <S> S createService(
             Class<S> serviceClass, final String authToken) {
         if (!TextUtils.isEmpty(authToken)) {
+            Log.d("Token Service ", authToken);
+
             AuthenticationInterceptor interceptor =
                     new AuthenticationInterceptor(authToken);
 
             if (!httpClient.interceptors().contains(interceptor)) {
-//                httpClient.addInterceptor(interceptor);
-                httpClient.addInterceptor(logging);
 
+                httpClient.addInterceptor(interceptor);
+                httpClient.addInterceptor(logging);
                 builder.client(httpClient.build());
                 retrofit = builder.build();
             }

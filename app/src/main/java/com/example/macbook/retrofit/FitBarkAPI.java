@@ -17,11 +17,7 @@ import static com.example.macbook.retrofit.Constants.UNSPLASH_CLIENT_ID;
  */
 
 public interface FitBarkAPI {
-    @GET("authorize?response_type=code&client_credentials&")
-    Call<List<User>> getFitBarkAuthCode(
-            @Query("client_id") String fitBarkID,
-            @Query("redirect_uri") String fitBarkRedirect
-    );
+
     @FormUrlEncoded
     @POST("/oauth/token")
     Call<AccessToken> getAccessToken(
@@ -30,5 +26,8 @@ public interface FitBarkAPI {
             @Field("client_id") String clientID,
             @Field("client_secret") String clientSecret,
             @Field("redirect_uri") String redirectUri);
+    @GET("api/v2/user")
+    Call<User> getFitBarkUser();
+
 }
 

@@ -6,12 +6,15 @@ package com.example.macbook.retrofit;
 
 public class User {
 
-    private String username;
+
+    private Object user;
 
     public User () {};
 
-    public String getUsername() {
-        return username;
+    public Object getUser() {
+        return user;
     }
 
 }
+
+
